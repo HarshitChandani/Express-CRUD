@@ -1,0 +1,17 @@
+<%- include('header') %>
+
+   <div class="container w-50">
+      <form method="post" action="/new">
+         <div class="mb-3">
+           <label for="product-name" class="form-label">Name:</label>
+           <input type="text" class="form-control" id="product-name" name="product-name" aria-describedby="product-name" value="">
+         </div>
+         <div class="mb-3">
+           <label for="product-price" class="form-label">Price</label>
+           <input type="text" class="form-control" id="product-price" name="product-price" value=""/>
+         </div>
+         <button type="submit" class="btn btn-primary">Add</button>
+       </form>
+   </div>
+
+<%- include('footer') %>

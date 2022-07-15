@@ -1,0 +1,41 @@
+<!--
+including header content which is common for all pages
+-->
+<%- include ('header') %>
+
+<div class="container">
+  <div class="all-products m-5">
+   <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+      <a href="/new" type="button" class="btn btn-primary me-md-2" type="button">Add new</a>
+    </div>
+    <table class="table">
+      <thead>
+        <tr class="text-center">
+          <th>S.r</th>
+          <th>Name</th>
+          <th>Price</th>
+          <th>Option</th>
+        </tr>
+      </thead>
+      <tbody>
+          <% for(let count=0; count< data.length;count++) { %>
+            <tr class="text-center">
+              <td><%= count+1 %>  </td>
+              <td><%= data[count].name %> </td>
+              <td><%= data[count].price %></td>
+              <td>
+                <a  href="/edit?q=<%= data[count].id %>" name="" id="" class="btn btn-warning" role="button">Modify</a>
+                <a href='/delete?q=<%= data[count].id %>' id="" class="btn btn-danger" role="button">Delete</a>
+              </td>
+            </tr>
+            <% } %>
+          <tr></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+  <!--
+including footer content which is common for all pages
+-->
+<%- include ('footer') %>
