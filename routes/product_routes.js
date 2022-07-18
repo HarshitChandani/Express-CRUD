@@ -1,69 +1,16 @@
 "use strict";
 
 const express = require("express");
-const Connection = require("../database/connection");
-const app = express();
+const product_controller = require("../controller/productController")
+const {isAuthenticated} = require("../middlewares/auth")
 
-const con = new Connection().getConnection();
+const router = express.Router();
 
-app.get("/", (request, response) => {
-  var data;
-  con.query("SELECT * FROM products", (err, result) => {
-    if (!err) {
-      response.render("index", {
-        data: result,
-      });
-    }
-  });
-});
+router.get("/", isAuthenticated ,product_controller.get_all_products);
+router.get("/new", product_controller.redirect_to_add_new_product );
+router.post("/new",product_controller.add_new_product);
+router.get("/edit",product_controller.redirect_to_edit_product)
+router.post("/edit",product_controller.edit_product);
+router.get("/delete", product_controller.delete);
 
-app.route("/new")
-  .get((request, response) => {
-    response.render("new");
-  })
-  .post((request, response) => {
-    var product = {
-      name: request.body["product-name"],
-      price: request.body["product-price"],
-    };
-    con.query("INSERT INTO products SET ?", product, (err, result) => {
-      if (!err) {
-        response.redirect("/");
-      }
-    });
-  });
-
-app.route("/edit")
-  .get((request, response) => {
-    con.query(
-      "SELECT name,price FROM products WHERE id= ?",
-      [request.query.q],
-      (error, rows) => {
-        response.render("edit", { id :request.query.q ,data: rows[0] });
-      }
-    );
-  })
-  .post((request,response) => {
-    var data = {
-      name: request.body["product-name"],
-      price: request.body["product-price"],
-    }
-    con.query(`update products set ? where id = ${request.body.product_id}`,data,(err,result) => {
-      if (!err){
-        response.redirect("/")
-      }
-    });
-  });
-
-app.get("/delete",(request,response) => {
-  con.query(`DELETE FROM products WHERE id = ?`,[request.query.q],(err,result) => {
-    if (result.affectedRows == 1){
-      response.redirect("/")
-    }
-    else{
-      console.log(err)
-    }
-  })
-})
-
-module.exports = app;
+module.exports = router;

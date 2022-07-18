@@ -20,7 +20,7 @@ class Connection {
   }
   getConnection = () => {
     this.dbConnect.connect((error) => {
-      console.log("Connection Created.");
+      // console.log("Connection Created.");
     });
     return this.dbConnect;
   };

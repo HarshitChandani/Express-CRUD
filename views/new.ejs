@@ -4,14 +4,25 @@
       <form method="post" action="/new">
          <div class="mb-3">
            <label for="product-name" class="form-label">Name:</label>
-           <input type="text" class="form-control" id="product-name" name="product-name" aria-describedby="product-name" value="">
+           <input type="text" class="form-control" id="product-name" name="product-name" aria-describedby="product-name" value="<%= data['product-name'] %>">
          </div>
          <div class="mb-3">
            <label for="product-price" class="form-label">Price</label>
-           <input type="text" class="form-control" id="product-price" name="product-price" value=""/>
+           <input type="text" class="form-control" id="product-price" name="product-price" value="<%= data['product-price'] %>"/>
          </div>
-         <button type="submit" class="btn btn-primary">Add</button>
+         <button type="submit" class="btn btn-primary mx-2">Add</button>
+         <a role="button" href="/" class="btn btn-danger mx-2">Cancel</a>
        </form>
+       <ol class="validation-errors text-danger m-3">
+          <% if (error.length != 0) { %>
+              <h6>Oops! You made some mistakes </h6>
+              <% error.forEach( (msg) => { %>
+                <li class="mx-2" style="font-size:18px">
+                  <%= msg %>
+                </li>
+              <% }) %>
+          <% } %>     
+       </ol>
    </div>
 
 <%- include('footer') %>
