@@ -25,6 +25,8 @@ app.use(cookieParser());
 // custom middleware for authentication .
 app.use(auth);
 
+console.log("Hello");
+
 // setting up the routes
 app.use("/",product_route)
 app.use("/user",user_route)
